@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "openweather-apis": "^4.5.0",
+    "request": "^2.88.2"
+  }
+}
