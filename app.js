@@ -6,11 +6,14 @@ app.use(express.json());
 app.set('trust proxy', true);
 
 const apiKey = "38c3094491af463d02763f0e5c714782";
-const location = {
-    location: "France ",
-    city: "Paris"
+
+const locationData = {
+    country: "Nigeria ",
+    city: "Lagos",
+    name: "James"
 }
-const api = "https://api.openweathermap.org/data/2.5/weather?q=" + location.city +" &mode=json&units=metric&appid=" + apiKey;
+
+const api = "https://api.openweathermap.org/data/2.5/weather?q=" + locationData.city +" &mode=json&units=metric&appid=" + apiKey;
  
 app.get("/",  (req, res) => {
    let message = req.query.message 
@@ -20,9 +23,9 @@ app.get("/",  (req, res) => {
           const weatherData = JSON.parse(data)
           const temperature = weatherData.main.temp
       message =  
-        res.write(`{ip:${ip} 
-        "Location": ${location.city} 
-        "greeting": Hello, Nathan!, the temperature  is ${temperature} degree celcius in ${location.city}}`)
+         res.write(`{ip:${ip} 
+        "Location": ${locationData.city} 
+        "greeting": Hello, ${locationData.name}!, the temperature  is ${temperature} degree celcius in ${locationData.city}}`)
           res.send()
         })
      })
