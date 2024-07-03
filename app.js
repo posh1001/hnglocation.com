@@ -12,7 +12,7 @@ const location = {
 }
 const api = "https://api.openweathermap.org/data/2.5/weather?q=" + location.city +" &mode=json&units=metric&appid=" + apiKey;
  
-app.get("/api",  (req, res) => {
+app.get("/",  (req, res) => {
    let message = req.query.message 
     const ip = req.ip;
      https.get(api, function(response) {
