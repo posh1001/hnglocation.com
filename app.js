@@ -23,7 +23,7 @@ app.get("/api/hello",  (req, res) => {
           const weatherData = JSON.parse(data)
           const temperature = weatherData.main.temp
             res.json({
-            "Client_ip": ip,
+            "Client_ip": ` ${req.socket.remoteAddress}`,
             "Location": locationData.city,
             "greeting": `Hello, ${locationData.name}!, the temperature is ${temperature} degree celcius in ${locationData.city}`,
           })
