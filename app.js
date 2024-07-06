@@ -27,7 +27,7 @@ app.get("/api/hello",  async(req, res) => {
 
    res.json({
     Client_ip: ipAddress,
-    location: wResponse.data.location.region,
+    location: wResponse.data.location.region ,
     greeting: `Hello, ${visitor_name}!, the temperature is ${wResponse.data.current.temp_c} degree in ${wResponse.data.location.region}`
    })
   
