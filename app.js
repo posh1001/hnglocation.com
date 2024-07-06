@@ -17,7 +17,7 @@ app.get("/api/hello",  async(req, res) => {
 
  
    const ipResponse = await axios.get("https://api.ipify.org?format=json")
-   console.log(ipResponse)
+  
    const ipAddress = ipResponse.data.ip
 
  
