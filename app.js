@@ -1,37 +1,43 @@
+const axios = require('axios');
+ require('dotenv').config();
 const express = require('express');
-const https = require('https')
+
+
 
 const app = express();
 app.set('trust proxy', true);
 app.use(express.json());
 
-const apiKey = "38c3094491af463d02763f0e5c714782";
 
-const locationData = {
-    country: "Nigeria",
-    city: "Lagos",
-    name: "Mark"
-}
+const port = 4000 || process.env.port
 
-const api = "https://api.openweathermap.org/data/2.5/weather?q=" + locationData.city +" &mode=json&units=metric&appid=" + apiKey;
+app.get("/api/hello",  async(req, res) => {
+ try {
+   const visitor_name = req.query.visitor_name;
+
  
-app.get("/api/hello",  (req, res) => {
-   let { visitor_name } = req.query;
-    const ip = req.ip;
-     https.get(api, function(response) {
-        response.on ("data", function(data) {
-          const weatherData = JSON.parse(data)
-          const temperature = weatherData.main.temp
-            res.json({
-            "Client_ip": ` ${req.socket.remoteAddress}`,
-            "Location": locationData.city,
-            "greeting": `Hello, ${locationData.name}!, the temperature is ${temperature} degree celcius in ${locationData.city}`,
-          })
-        })
-     })
-     
+   const ipResponse = await axios.get("https://api.ipify.org?format=json")
+   console.log(ipResponse)
+   const ipAddress = ipResponse.data.ip
+
+ 
+   const API_KEY = process.env.API_KEY;
+ 
+   const wResponse = await axios.get(`https://api.weatherapi.com/v1/current.json?q=${ipAddress}&key=${API_KEY}`)
+
+   res.json({
+    Client_ip: ipAddress,
+    location: wResponse.data.location.region,
+    greeting: `Hello, ${visitor_name}!, the temperature is ${wResponse.data.current.temp_c} degree in ${wResponse.data.location.region}`
+   })
+  
+ 
+ } catch (error) {
+   console.error('Error fetching ip info:', error.message)
+
+ }
 });
 
-app.listen(4000, () => {
-   console.log( 'listening on https://localhost: 4000')
-})
+app.listen(port, () => {
+   console.log("connected on port 4000")
+  } )
